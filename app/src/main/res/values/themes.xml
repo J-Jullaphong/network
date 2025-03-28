@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Network" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Network" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/backgroundColor</item>
+        <item name="android:statusBarColor">@color/primaryColor</item>
+    </style>
 </resources>

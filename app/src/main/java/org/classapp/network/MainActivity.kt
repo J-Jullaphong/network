@@ -3,25 +3,22 @@ package org.classapp.network
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import org.classapp.network.ui.theme.NetworkTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             NetworkTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    UserGreeting(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +28,30 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun UserGreeting(modifier: Modifier = Modifier) {
+    var userName by remember { mutableStateOf("Guest") }
+
+    val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+
+    LaunchedEffect(user) {
+        userName = user?.displayName ?: "Guest"
+    }
+
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Hello, $userName!",
+            style = MaterialTheme.typography.headlineMedium
+        )
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     NetworkTheme {
-        Greeting("Android")
+        UserGreeting()
     }
 }

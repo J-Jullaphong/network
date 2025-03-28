@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
@@ -36,7 +38,24 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+}
+
+secrets {
+    // To add your Maps API key to this project:
+    // 1. If the secrets.properties file does not exist, create it in the same folder as the local.properties file.
+    // 2. Add this line, where YOUR_API_KEY is your API key:
+    //        MAPS_API_KEY=YOUR_API_KEY
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.properties"
+
+    // Configure which keys should be ignored by the plugin
+    ignoreList.add("keyToIgnore") // Ignore key "keyToIgnore"
+    ignoreList.add("sdk.*") // Ignore all keys matching regexp "sdk."
 }
 
 dependencies {
@@ -55,6 +74,17 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.play.services.auth)
+    implementation(libs.aws.android.sdk.s3)
+    implementation(libs.aws.android.sdk.core)
+    implementation(libs.secrets.gradle.plugin)
+    implementation(libs.localisation)
+    implementation(libs.gson)
+    implementation(libs.glide)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

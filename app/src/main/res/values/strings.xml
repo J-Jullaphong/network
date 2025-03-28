@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">network</string>
+    <string name="app_name">NetWork</string>
+    <string name="default_web_client_id" translatable="false">937232832454-nic7m72jn6s95il6q551pmm2ch2aiag9.apps.googleusercontent.com</string>
 </resources>
