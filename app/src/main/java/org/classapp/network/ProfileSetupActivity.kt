@@ -50,6 +50,10 @@ class ProfileSetupActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val executor = Executors.newSingleThreadExecutor()
 
+    private var existingVisibility: String = "Public"
+
+    private var existingProfileImageUrl: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_setup)
@@ -83,7 +87,6 @@ class ProfileSetupActivity : AppCompatActivity() {
         }
 
         fetchUserProfile()
-
         loadCountryAndCityData()
     }
 
@@ -123,15 +126,17 @@ class ProfileSetupActivity : AppCompatActivity() {
 
                     val profileImageUrl = userProfile["profileImage"] as? String
                     profileImageUrl?.let {
+                        existingProfileImageUrl = it
                         Glide.with(this)
                             .load(it)
                             .into(profileImageView)
                     }
+
+                    existingVisibility = userProfile["visibility"] as? String ?: "Public"
                 }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to fetch profile: ${e.message}", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Failed to fetch profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -223,7 +228,8 @@ class ProfileSetupActivity : AppCompatActivity() {
             "location" to mapOf(
                 "city" to cityAutoComplete.text.toString(),
                 "country" to countryAutoComplete.text.toString()
-            )
+            ),
+            "visibility" to existingVisibility
         )
 
         val updatedUserProfile = HashMap(userProfile)
@@ -234,16 +240,20 @@ class ProfileSetupActivity : AppCompatActivity() {
                 saveToFirestore(userId, updatedUserProfile)
             }
         } else {
+            existingProfileImageUrl?.let {
+                updatedUserProfile["profileImage"] = it
+            }
             saveToFirestore(userId, updatedUserProfile)
         }
     }
 
-
     private fun uploadProfileImageToS3(userId: String, imageUri: Uri, onSuccess: (String) -> Unit) {
         val file = convertUriToFile(imageUri)
-        val transferUtility =
-            TransferUtility.builder().defaultBucket(BUCKET_NAME).s3Client(s3Client).context(this)
-                .build()
+        val transferUtility = TransferUtility.builder()
+            .defaultBucket(BUCKET_NAME)
+            .s3Client(s3Client)
+            .context(this)
+            .build()
 
         val uploadObserver: TransferObserver = transferUtility.upload(
             "profile_images/$userId.jpg",
@@ -257,22 +267,13 @@ class ProfileSetupActivity : AppCompatActivity() {
                         "https://$BUCKET_NAME.s3.amazonaws.com/profile_images/$userId.jpg"
                     onSuccess(imageUrl)
                 } else if (state == TransferState.FAILED) {
-                    Toast.makeText(
-                        this@ProfileSetupActivity,
-                        "Image upload failed",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@ProfileSetupActivity, "Image upload failed", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {}
-
             override fun onError(id: Int, ex: Exception?) {
-                Toast.makeText(
-                    this@ProfileSetupActivity,
-                    "Upload error: ${ex?.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this@ProfileSetupActivity, "Upload error: ${ex?.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -295,8 +296,7 @@ class ProfileSetupActivity : AppCompatActivity() {
                 navigateToMain()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to save profile: ${e.message}", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Failed to save profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 

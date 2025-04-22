@@ -85,6 +85,8 @@ dependencies {
     implementation(libs.localisation)
     implementation(libs.gson)
     implementation(libs.glide)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
