@@ -21,6 +21,12 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.IIcon
+import com.mikepenz.iconics.typeface.library.fontawesome.FontAwesome
+import com.mikepenz.iconics.utils.colorInt
+import com.mikepenz.iconics.utils.sizeDp
+
 
 class AuthenticationActivity : AppCompatActivity() {
 
@@ -53,6 +59,9 @@ class AuthenticationActivity : AppCompatActivity() {
         val signUpLink = findViewById<TextView>(R.id.signUpLink)
 
         configureGoogleSignIn()
+
+        setEditTextIcon(emailEditText, FontAwesome.Icon.faw_envelope)
+        setEditTextIcon(passwordEditText, FontAwesome.Icon.faw_lock)
 
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
@@ -164,6 +173,15 @@ class AuthenticationActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Failed to check user profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun setEditTextIcon(editText: EditText, icon: IIcon) {
+        val iconDrawable = IconicsDrawable(this, icon).apply {
+            sizeDp = 20
+            colorInt = resources.getColor(android.R.color.darker_gray, theme)
+        }
+        editText.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null)
+        editText.compoundDrawablePadding = 16
     }
 
     companion object {

@@ -16,6 +16,12 @@ import com.beastwall.localisation.model.State
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.IIcon
+import com.mikepenz.iconics.typeface.library.fontawesome.FontAwesome
+import com.mikepenz.iconics.typeface.library.simpleicons.SimpleIcons
+import com.mikepenz.iconics.utils.colorInt
+import com.mikepenz.iconics.utils.sizeDp
 import java.io.*
 import java.util.concurrent.Executors
 
@@ -40,6 +46,7 @@ class ProfileSetupActivity : AppCompatActivity() {
     private lateinit var weChatEditText: EditText
     private lateinit var lineEditText: EditText
     private lateinit var saveProfileButton: Button
+    private lateinit var cancelButton: Button
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
@@ -78,8 +85,33 @@ class ProfileSetupActivity : AppCompatActivity() {
         lineEditText = findViewById(R.id.lineEditText)
         saveProfileButton = findViewById(R.id.saveProfileButton)
 
+        setEditTextIcon(fullNameEditText, FontAwesome.Icon.faw_user)
+        setEditTextIcon(careerEditText, FontAwesome.Icon.faw_briefcase)
+        setEditTextIcon(organizationEditText, FontAwesome.Icon.faw_building)
+        setEditTextIcon(phoneEditText, FontAwesome.Icon.faw_phone)
+        setEditTextIcon(emailEditText, FontAwesome.Icon.faw_envelope)
+        setEditTextIcon(websiteEditText, FontAwesome.Icon.faw_globe)
+        setEditTextIcon(countryAutoComplete, FontAwesome.Icon.faw_flag)
+        setEditTextIcon(cityAutoComplete, FontAwesome.Icon.faw_map_marker_alt)
+
+        setEditTextIcon(facebookEditText, SimpleIcons.Icon.sim_facebook)
+        setEditTextIcon(linkedinEditText, SimpleIcons.Icon.sim_linkedin)
+        setEditTextIcon(twitterEditText, SimpleIcons.Icon.sim_twitter)
+        setEditTextIcon(instagramEditText, SimpleIcons.Icon.sim_instagram)
+        setEditTextIcon(whatsappEditText, SimpleIcons.Icon.sim_whatsapp)
+        setEditTextIcon(telegramEditText, SimpleIcons.Icon.sim_telegram)
+        setEditTextIcon(skypeEditText, SimpleIcons.Icon.sim_skype)
+        setEditTextIcon(weChatEditText, SimpleIcons.Icon.sim_wechat)
+        setEditTextIcon(lineEditText, SimpleIcons.Icon.sim_line)
+
         profileImageView.setOnClickListener {
             selectImageFromGallery()
+        }
+
+        cancelButton = findViewById(R.id.cancelButton)
+
+        cancelButton.setOnClickListener {
+            finish()
         }
 
         saveProfileButton.setOnClickListener {
@@ -128,7 +160,10 @@ class ProfileSetupActivity : AppCompatActivity() {
                     profileImageUrl?.let {
                         existingProfileImageUrl = it
                         Glide.with(this)
-                            .load(it)
+                            .load(profileImageUrl)
+                            .placeholder(R.drawable.ic_person)
+                            .error(R.drawable.ic_person)
+                            .circleCrop()
                             .into(profileImageView)
                     }
 
@@ -136,7 +171,8 @@ class ProfileSetupActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to fetch profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to fetch profile: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
     }
 
@@ -183,6 +219,15 @@ class ProfileSetupActivity : AppCompatActivity() {
         }
     }
 
+    private fun setEditTextIcon(editText: EditText, icon: IIcon) {
+        val iconDrawable = IconicsDrawable(this, icon).apply {
+            sizeDp = 20
+            colorInt = resources.getColor(android.R.color.darker_gray, theme)
+        }
+        editText.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null)
+        editText.compoundDrawablePadding = 16
+    }
+
     private fun selectImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -220,7 +265,7 @@ class ProfileSetupActivity : AppCompatActivity() {
         addIfNotEmpty(weChatEditText, "weChat")
         addIfNotEmpty(lineEditText, "line")
 
-        val userProfile = mutableMapOf<String, Any>(
+        val userProfile = mutableMapOf(
             "fullName" to fullNameEditText.text.toString(),
             "career" to careerEditText.text.toString(),
             "organization" to organizationEditText.text.toString(),
@@ -267,13 +312,21 @@ class ProfileSetupActivity : AppCompatActivity() {
                         "https://$BUCKET_NAME.s3.amazonaws.com/profile_images/$userId.jpg"
                     onSuccess(imageUrl)
                 } else if (state == TransferState.FAILED) {
-                    Toast.makeText(this@ProfileSetupActivity, "Image upload failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ProfileSetupActivity,
+                        "Image upload failed",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
             override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {}
             override fun onError(id: Int, ex: Exception?) {
-                Toast.makeText(this@ProfileSetupActivity, "Upload error: ${ex?.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@ProfileSetupActivity,
+                    "Upload error: ${ex?.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
@@ -296,7 +349,8 @@ class ProfileSetupActivity : AppCompatActivity() {
                 navigateToMain()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to save profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to save profile: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
     }
 

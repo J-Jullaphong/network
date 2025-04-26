@@ -13,6 +13,11 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.IIcon
+import com.mikepenz.iconics.typeface.library.fontawesome.FontAwesome
+import com.mikepenz.iconics.utils.colorInt
+import com.mikepenz.iconics.utils.sizeDp
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -35,6 +40,10 @@ class SignUpActivity : AppCompatActivity() {
         val confirmPasswordEditText = findViewById<EditText>(R.id.confirmPasswordEditText)
         val signUpButton = findViewById<Button>(R.id.signUpButton)
         val loginLink = findViewById<TextView>(R.id.loginLink)
+
+        setEditTextIcon(emailEditText, FontAwesome.Icon.faw_envelope)
+        setEditTextIcon(passwordEditText, FontAwesome.Icon.faw_lock)
+        setEditTextIcon(confirmPasswordEditText, FontAwesome.Icon.faw_lock)
 
         signUpButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
@@ -66,7 +75,11 @@ class SignUpActivity : AppCompatActivity() {
                     Toast.makeText(this, "Sign Up Successful!", Toast.LENGTH_SHORT).show()
                     navigateToProfileSetup()
                 } else {
-                    Toast.makeText(this, "Sign Up Failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Sign Up Failed: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Log.e("SignUpActivity", "Error: ${task.exception}")
                 }
             }
@@ -76,5 +89,14 @@ class SignUpActivity : AppCompatActivity() {
         val intent = Intent(this, ProfileSetupActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun setEditTextIcon(editText: EditText, icon: IIcon) {
+        val iconDrawable = IconicsDrawable(this, icon).apply {
+            sizeDp = 20
+            colorInt = resources.getColor(android.R.color.darker_gray, theme)
+        }
+        editText.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null)
+        editText.compoundDrawablePadding = 16
     }
 }

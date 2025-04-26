@@ -1,198 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:orientation="vertical">
 
-        <!-- Profile Image -->
-        <ImageView
-            android:id="@+id/profileImageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_person"
-            android:scaleType="centerCrop"
-            android:layout_gravity="center"
-            android:background="@android:color/white"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Full Name -->
-        <EditText
-            android:id="@+id/fullNameEditText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="Full Name"
-            android:inputType="textPersonName"
-            android:minHeight="48dp" />
+            android:layout_height="wrap_content">
 
-        <!-- Career -->
-        <EditText
-            android:id="@+id/careerEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="Career"
-            android:inputType="text"
-            android:minHeight="48dp" />
+            <ImageView
+                android:id="@+id/backgroundImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/intersect" />
 
-        <!-- Organization -->
-        <EditText
-            android:id="@+id/organizationEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="Organization"
-            android:inputType="text"
-            android:minHeight="48dp" />
+            <TextView
+                android:id="@+id/editProfileTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="64dp"
+                android:text="Edit Profile"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Phone Number -->
-        <EditText
-            android:id="@+id/phoneEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="Phone Number"
-            android:inputType="phone"
-            android:minHeight="48dp" />
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="130dp"
+                android:layout_marginTop="136dp"
+                android:background="@drawable/circle_white_background"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Email -->
-        <EditText
-            android:id="@+id/emailEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Website -->
-        <EditText
-            android:id="@+id/websiteEditText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="Website"
-            android:inputType="textUri"
-            android:minHeight="48dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <!-- Country (AutoComplete) -->
-        <AutoCompleteTextView
-            android:id="@+id/countryAutoComplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:completionThreshold="1"
-            android:hint="Country"
-            android:minHeight="48dp" />
+            <EditText
+                android:id="@+id/fullNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Full Name"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
 
-        <!-- City (AutoComplete) -->
-        <AutoCompleteTextView
-            android:id="@+id/cityAutoComplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:completionThreshold="1"
-            android:hint="City"
-            android:minHeight="48dp" />
+            <EditText
+                android:id="@+id/careerEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Career"
+                android:inputType="text"
+                android:minHeight="48dp" />
 
-        <!-- Facebook -->
-        <EditText
-            android:id="@+id/facebookEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="Facebook Profile"
-            android:inputType="textUri"
-            android:minHeight="48dp" />
+            <EditText
+                android:id="@+id/organizationEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Organization"
+                android:inputType="text"
+                android:minHeight="48dp" />
 
-        <!-- LinkedIn -->
-        <EditText
-            android:id="@+id/linkedinEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="LinkedIn Profile"
-            android:inputType="textUri"
-            android:minHeight="48dp" />
+            <EditText
+                android:id="@+id/phoneEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:minHeight="48dp" />
 
-        <!-- Twitter -->
-        <EditText
-            android:id="@+id/twitterEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="Twitter Profile"
-            android:inputType="textUri"
-            android:minHeight="48dp" />
+            <EditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp" />
 
-        <!-- Instagram -->
-        <EditText
-            android:id="@+id/instagramEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="Instagram Profile"
-            android:inputType="textUri"
-            android:minHeight="48dp" />
+            <EditText
+                android:id="@+id/websiteEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Website"
+                android:inputType="textUri"
+                android:minHeight="48dp" />
 
-        <!-- WhatsApp -->
-        <EditText
-            android:id="@+id/whatsappEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="WhatsApp Number"
-            android:inputType="phone"
-            android:minHeight="48dp" />
+            <AutoCompleteTextView
+                android:id="@+id/countryAutoComplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:completionThreshold="1"
+                android:hint="Country"
+                android:minHeight="48dp" />
 
-        <!-- Telegram -->
-        <EditText
-            android:id="@+id/telegramEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Telegram Username"
-            android:inputType="text"
-            android:layout_marginBottom="8dp"/>
+            <AutoCompleteTextView
+                android:id="@+id/cityAutoComplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:completionThreshold="1"
+                android:hint="City"
+                android:minHeight="48dp" />
 
-        <!-- Skype -->
-        <EditText
-            android:id="@+id/skypeEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Skype ID"
-            android:inputType="text"
-            android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/facebookEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Facebook Profile"
+                android:inputType="textUri"
+                android:minHeight="48dp" />
 
-        <!-- WeChat -->
-        <EditText
-            android:id="@+id/weChatEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="WeChat ID"
-            android:inputType="text"
-            android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/linkedinEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="LinkedIn Profile"
+                android:inputType="textUri"
+                android:minHeight="48dp" />
 
-        <!-- Line -->
-        <EditText
-            android:id="@+id/lineEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Line ID"
-            android:inputType="text"
-            android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/twitterEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Twitter Profile"
+                android:inputType="textUri"
+                android:minHeight="48dp" />
 
-        <!-- Save Button -->
-        <Button
-            android:id="@+id/saveProfileButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:layout_marginTop="16dp"/>
+            <EditText
+                android:id="@+id/instagramEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Instagram Profile"
+                android:inputType="textUri"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/whatsappEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="WhatsApp Number"
+                android:inputType="phone"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/telegramEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Telegram Username"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/skypeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Skype ID"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/weChatEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="WeChat ID"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/lineEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Line ID"
+                android:inputType="text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingBottom="24dp">
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/rounded_edittext_register_login"
+                    android:text="Cancel"
+                    android:textColor="@color/primaryColor" />
+
+                <Button
+                    android:id="@+id/saveProfileButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_blue_button"
+                    android:text="Save"
+                    android:textColor="@color/backgroundColor" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
