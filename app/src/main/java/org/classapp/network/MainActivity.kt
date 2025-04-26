@@ -11,6 +11,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.*
@@ -75,7 +77,8 @@ class MainActivity : ComponentActivity() {
 
             userRef.get()
                 .addOnSuccessListener { document ->
-                    val savedContacts = document.get("SavedContacts") as? List<*> ?: emptyList<Any>()
+                    val savedContacts =
+                        document.get("SavedContacts") as? List<*> ?: emptyList<Any>()
                     if (userIdFromLink in savedContacts) {
                         Toast.makeText(this, "Contact already saved", Toast.LENGTH_SHORT).show()
                         onContactSaved(true)
@@ -84,16 +87,25 @@ class MainActivity : ComponentActivity() {
                             "SavedContacts",
                             com.google.firebase.firestore.FieldValue.arrayUnion(userIdFromLink)
                         ).addOnSuccessListener {
-                            Toast.makeText(this, "Contact added from deeplink!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Contact added from deeplink!", Toast.LENGTH_SHORT)
+                                .show()
                             onContactSaved(true)
                         }.addOnFailureListener { e ->
-                            Toast.makeText(this, "Failed to add contact: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "Failed to add contact: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             onContactSaved(false)
                         }
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to fetch contact list: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Failed to fetch contact list: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     onContactSaved(false)
                 }
         }
@@ -110,7 +122,8 @@ fun MainScreenWithBottomNavBar(
     val currentRoute = navBackStackEntry?.destination?.route
 
     val allNavItems = remember { NetWorkNavItemInfo().getAllNavItems() }
-    val navSelectedItem = allNavItems.indexOfFirst { it.route == currentRoute }.takeIf { it >= 0 } ?: 0
+    val navSelectedItem =
+        allNavItems.indexOfFirst { it.route == currentRoute }.takeIf { it >= 0 } ?: 0
 
     val auth = FirebaseAuth.getInstance()
     val db = FirebaseFirestore.getInstance()
@@ -142,7 +155,9 @@ fun MainScreenWithBottomNavBar(
     } else {
         Scaffold(
             bottomBar = {
-                NavigationBar {
+                NavigationBar(
+                    containerColor = colorResource(id = R.color.primaryColor)
+                ) {
                     allNavItems.forEachIndexed { index, itemInfo ->
                         NavigationBarItem(
                             selected = index == navSelectedItem,
@@ -161,7 +176,14 @@ fun MainScreenWithBottomNavBar(
                                     contentDescription = itemInfo.label
                                 )
                             },
-                            label = { Text(text = itemInfo.label) }
+                            label = { Text(text = itemInfo.label) },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = Color(0xFF6299E4),
+                                unselectedIconColor = Color.White,
+                                selectedTextColor = Color(0xFF6299E4),
+                                unselectedTextColor = Color.White,
+                                indicatorColor = colorResource(id = R.color.primaryColor)
+                            )
                         )
                     }
                 }

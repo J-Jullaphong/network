@@ -30,6 +30,10 @@ navigationCompose = "2.8.9"
 coilCompose = "2.7.0"
 capturable = "3.0.1"
 core = "3.5.3"
+iconicsCore = "5.5.0-compose01"
+fontawesomeTypeface = "5.13.3.1-kotlin"
+simpleIconsTypeface = "17.0.0.2"
+iconicsCompose = "5.5.0-compose01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -67,6 +71,10 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 capturable = { group = "dev.shreyaspatil", name = "capturable", version.ref = "capturable" }
 core = { group = "com.google.zxing", name = "core", version.ref = "core" }
+iconics-core = { group = "com.mikepenz", name = "iconics-core", version.ref = "iconicsCore" }
+fontawesome-typeface = { group = "com.mikepenz", name = "fontawesome-typeface", version.ref = "fontawesomeTypeface" }
+simple-icons-typeface = { group = "com.mikepenz", name = "simple-icons-typeface", version.ref = "simpleIconsTypeface" }
+iconics-compose = { group = "com.mikepenz", name = "iconics-compose", version.ref = "iconicsCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
