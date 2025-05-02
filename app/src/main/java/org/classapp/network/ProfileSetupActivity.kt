@@ -104,6 +104,10 @@ class ProfileSetupActivity : AppCompatActivity() {
         setEditTextIcon(weChatEditText, SimpleIcons.Icon.sim_wechat)
         setEditTextIcon(lineEditText, SimpleIcons.Icon.sim_line)
 
+        auth.currentUser?.email?.let { email ->
+            emailEditText.setText(email)
+        }
+
         profileImageView.setOnClickListener {
             selectImageFromGallery()
         }
@@ -244,6 +248,32 @@ class ProfileSetupActivity : AppCompatActivity() {
 
     private fun saveUserProfile() {
         val userId = auth.currentUser?.uid ?: return
+
+        if (fullNameEditText.text.isNullOrBlank()) {
+            fullNameEditText.error = "Full Name is required"
+            fullNameEditText.requestFocus()
+            return
+        }
+        if (careerEditText.text.isNullOrBlank()) {
+            careerEditText.error = "Career is required"
+            careerEditText.requestFocus()
+            return
+        }
+        if (organizationEditText.text.isNullOrBlank()) {
+            organizationEditText.error = "Company/Organization is required"
+            organizationEditText.requestFocus()
+            return
+        }
+        if (countryAutoComplete.text.isNullOrBlank()) {
+            countryAutoComplete.error = "Country is required"
+            countryAutoComplete.requestFocus()
+            return
+        }
+        if (cityAutoComplete.text.isNullOrBlank()) {
+            cityAutoComplete.error = "City is required"
+            cityAutoComplete.requestFocus()
+            return
+        }
 
         val contactDetails = mutableMapOf<String, String>()
 

@@ -54,7 +54,7 @@
                 android:id="@+id/signUpLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="60dp"
                 android:text="Sign Up"
                 android:textAlignment="center"
                 android:textColor="@color/textColor"
